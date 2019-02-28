@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/common/box.css" />
+    <link rel="stylesheet" type="text/css" href="css/common/checkbox.css" />
+    <link href="css/common/checkbox.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>ss
+    <style type="text/css">
+        /* .{
+                    width:1100px;
+
+                    } */
+        a {
+            color: black;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .box-body {
+            cursor: pointer;
+        }
+
+        .table {
+            padding: 0 0 0 0 !important;
+        }
+
+        .table tr {
+            background-color: white !important;
+            border-bottom: 1px solid dashed !important;
+        }
+
+        .table .table-header {
+            border-bottom: 1px solid dashed !important;
+        }
+
+        .box-header b:hover {
+            background-color: #E7E7E7;
+        }
+
+        .box-header a {
+            padding: 5px;
+        }
+
+        .box-body {
+            padding: 0 0 0 0 !important;
+        }
+
+        .active {
+            color: #000000;
+        }
+
+        .box-body .table-header .status {
+            color: #72afd2;
+        }
+
+        .box-body  .table-header  .type {
+            color: #72afd2;
+        }
+
+        .box-body .table-header span {
+            width: 2px !important;
+            height: 2px !important;
+        }
+
+        th .paixu:HOVER{
+            color:blue;
+        }
+
+        .box {
+            margin-top: 10px !important;
+        }
+    </style>
+    <!-- <script>
+    $(function(){
+        if($(".paixu").children().length==0){
+            //如果该元素下面没有span就是那个上下箭头
+            $(".paixu").css("color","blue");
+        }
+    })
+    </script> -->
+</head>
+
+<body style="background-color: #ecf0f5;">
+<div class="row" style="padding-top:10px">
+    <div class="col-md-2">
+        <h1 style="font-size: 24px; margin: 0;" class="">考勤列表</h1>
+    </div>
+    <div class="col-md-10 text-right">
+        <a href="##"><span class="glyphicon glyphicon-home"></span> 首页</a> >
+        <a disabled="disabled">考勤列表</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 thistable">
+        <div class="bgc-w box box-primary">
+             <div class="box-header" style="padding-bottom: 20px">
+                <a class="label label-success" href=""><span
+                        class="glyphicon glyphicon-refresh"></span>  刷新 </a>
+                <div class="input-group" style="width:150px;float:right;top:-5px">
+                    <input type="text" class="form-control input-sm pull-right baseKey" value="" placeholder="查找..." />
+                    <div class="input-group-btn" style="top:-1px;">
+                        <a class="btn btn-sm btn-default glyphicon glyphicon-search btn-change baseKetsubmit"></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-body">
+                <div class="table" style="padding-top: 15px;">
+                    <div class="">
+                        <table class="table table-hover table-striped">
+                            <tr class="table-header">
+                                <th scope="col" class="paixu thistype">类型
+                                </th>
+                                <th scope="col"><span class="paixu thistime">时间
+						</span></th>
+                                <th scope="col">ip</th>
+                                <th scope="col">备注</th>
+                                <th scope="col"><span class="paixu thisstatus">状态
+						</span></th>
+                            </tr>
+                            <tr th:each="attendce :${attendceList}">
+                                <td><span th:text="${attendce.attendsId}">
+									</span></td>
+
+                                <td ><span th:text="${attendce.attendsTime}">
+									2019-2-27 10:46:08
+									</span></td>
+                                <td><span th:text="${attendce.attendsIp}">
+									169.254.88.51
+									</span></td>
+                                <td>
+                                </td>
+                                <td>
+
+                                    <span class="label label-warning" th:text="${attendce.statusId}">迟到</span>
+
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="box-footer no-padding" style="margin-top: -20px;">
+                <div style="padding: 5px;">
+                    <div id="page"
+                         style="background: #fff; border: 0px; margin-top: 0px; padding: 2px; height: 25px;">
+                        <div style="width: 40%; float: left;">
+                            <div class="pageInfo" style="margin-left: 5px;">
+                                共<span>3</span>条 | 每页<span>10</span>条
+                                | 共<span>1</span>页
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                /* 分页插件按钮的点击事件 */
+                /* url是从后台接收过来的链接，sort是记录排序规则 */
+                $('.tablefirst').on('click',function(){
+                    if(true==false){
+                        $('.thistable').load('attendcelisttable?page=0');
+                    }
+                });
+                $('.tableup').on('click',function(){
+                    if(true==false){
+                        $('.thistable').load('attendcelisttable?page=-1');
+                    }
+                });
+                $('.tabledown').on('click',function(){
+                    if(true==false){
+                        $('.thistable').load('attendcelisttable?page=1');
+                    }
+                });
+                $('.tablelast').on('click',function(){
+                    if(true==false){
+                        $('.thistable').load('attendcelisttable?page=0');
+                    }
+
+                });
+
+
+            </script>			</div>		</div>
+</div>
+</body>
+
+
+
+
+</html>
